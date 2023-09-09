@@ -20,6 +20,6 @@ final class ErrorProdutosState extends ProdutosState {
 }
 
 final class LoadedProdutosState extends ProdutosState {
-  final List<ProdutosModel> produtos;
+  final List<ProdutosEntity> produtos;
   const LoadedProdutosState(this.produtos);
 }

@@ -1,8 +1,10 @@
-import 'package:cafeteria_app/rotas/rotas.dart';
+import 'package:cafeteria_app/config/routes/rotas.dart';
+import 'package:cafeteria_app/core/utils/getit_setup.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  getItSetup();
   runApp(const MyApp());
 }
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
           blendOnColors: false,
           useTextTheme: true,
           useM2StyleDividerInM3: true,
-          // alignedDropdown: true,
+          alignedDropdown: true,
           useInputDecoratorThemeInDialogs: true,
         ),
         visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
           blendOnLevel: 20,
           useTextTheme: true,
           useM2StyleDividerInM3: true,
-          // alignedDropdown: true,
+          alignedDropdown: true,
           useInputDecoratorThemeInDialogs: true,
         ),
         visualDensity: FlexColorScheme.comfortablePlatformDensity,

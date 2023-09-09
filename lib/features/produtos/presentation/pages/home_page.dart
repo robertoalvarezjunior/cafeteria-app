@@ -1,4 +1,4 @@
-import 'package:cafeteria_app/bloc/produtos/produtos_bloc.dart';
+import 'package:cafeteria_app/features/produtos/presentation/bloc/produtos_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +22,18 @@ class _HomePageViewState extends State<HomePageView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => _produtosBloc,
-      child: const _ListaProdutosView(),
+      child: BlocListener<ProdutosBloc, ProdutosState>(
+        listener: (context, state) {
+          if (state is ErrorProdutosState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+              ),
+            );
+          }
+        },
+        child: const _ListaProdutosView(),
+      ),
     );
   }
 }
@@ -49,7 +60,7 @@ class _ListaProdutosView extends StatelessWidget {
               itemCount: state.produtos.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(state.produtos[index].nome),
+                  title: Text(state.produtos[index].nomeProduto),
                 );
               },
             ),
