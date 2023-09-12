@@ -6,17 +6,18 @@ import 'package:http/http.dart' as http;
 
 final class GetUsuarioDataSourcesImp implements IGetUsuarioDataSources {
   @override
-  getUsuario(String email, String senha) async {
+  getUsuario({required String email, required String senha}) async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/usuario/login");
-      http.Response response = await http.post(url, body: <String, String>{
-        "email": email,
-        "senha": senha,
-      });
+      var url =
+          Uri.parse("http://172.31.32.1:8080/usuario/login/$email/$senha");
+      http.Response response = await http.post(url);
+
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        var decodeBody = jsonDecode(response.body);
-        print(decodeBody);
-        return {"token": "token"};
+        var body = jsonDecode(response.body);
+        return {
+          "token": body["token"],
+          "usuario": body["usuario"],
+        };
       } else {
         throw CatchError(message: "Falha na conexão");
       }

@@ -1,5 +1,5 @@
-abstract class ISaveUsuarioEnderecoRepository {
-  Future<String> saveUsuariosEndereco({
+abstract class ISaveUsuarioEnderecoDataSources {
+  Future<String> saveUsuarioEndereco({
     required String? id,
     required String idUsuario,
     required String rua,

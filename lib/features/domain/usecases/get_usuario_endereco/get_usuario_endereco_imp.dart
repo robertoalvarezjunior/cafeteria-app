@@ -5,7 +5,9 @@ import 'package:cafeteria_app/features/domain/usecases/get_usuario_endereco/get_
 
 final class GetUsuarioEnderecoImp implements IGetUsuarioEndereco {
   @override
-  Future<List<UsuarioEnderecoEntity>> getUsuarioEndereco() async {
-    return await getIt<IGetUsuarioEnderecoRepository>().getUsuarioEndereco();
+  Future<List<UsuarioEnderecoEntity>> getUsuarioEndereco(
+      {required String idUsuario, required String bearer}) async {
+    return await getIt<IGetUsuarioEnderecoRepository>()
+        .getUsuarioEndereco(idUsuario: idUsuario, bearer: bearer);
   }
 }

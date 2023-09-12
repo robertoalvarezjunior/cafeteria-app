@@ -4,7 +4,8 @@ import 'package:cafeteria_app/features/domain/usecases/get_usuario/get_usuario.d
 
 final class GetUsuarioImp implements IGetUsuario {
   @override
-  getUsuario(String email, String senha) async {
-    return await getIt<IGetUsuarioRepository>().getUsuario(email, senha);
+  getUsuario({required String email, required String senha}) async {
+    return await getIt<IGetUsuarioRepository>()
+        .getUsuario(email: email, senha: senha);
   }
 }

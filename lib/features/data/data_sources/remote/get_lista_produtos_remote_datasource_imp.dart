@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cafeteria_app/features/data/data_sources/get_lista_produtos_datasource.dart';
+import 'package:cafeteria_app/features/data/data_sources/get_lista_produtos_datasources.dart';
 import 'package:cafeteria_app/features/data/dtos/produtos_dto.dart';
 import 'package:cafeteria_app/features/domain/entities/error.dart';
 import 'package:cafeteria_app/features/domain/entities/produtos_entity.dart';

@@ -4,7 +4,8 @@ import 'package:cafeteria_app/features/domain/repositorys/get_usuario_repository
 
 final class GetUsuarioRepositoryImp implements IGetUsuarioRepository {
   @override
-  getUsuario(String email, String senha) {
-    return getIt<IGetUsuarioDataSources>().getUsuario(email, senha);
+  getUsuario({required String email, required String senha}) {
+    return getIt<IGetUsuarioDataSources>()
+        .getUsuario(email: email, senha: senha);
   }
 }
