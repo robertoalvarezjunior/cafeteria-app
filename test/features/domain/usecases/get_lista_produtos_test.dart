@@ -1,6 +1,6 @@
 import 'package:cafeteria_app/core/utils/getit_setup.dart';
 import 'package:cafeteria_app/features/domain/entities/produtos_entity.dart';
-import 'package:cafeteria_app/features/domain/usecases/get_lista_produtos/get_lista_produtos.dart';
+import 'package:cafeteria_app/features/domain/usecases/lista_produtos/get_lista_produtos.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 

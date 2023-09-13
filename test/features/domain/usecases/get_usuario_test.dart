@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cafeteria_app/features/domain/usecases/get_usuario/get_usuario.dart';
+import 'package:cafeteria_app/features/domain/usecases/usuario/get_usuario/get_usuario.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:cafeteria_app/core/utils/getit_setup.dart';

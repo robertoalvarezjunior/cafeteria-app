@@ -9,6 +9,7 @@ void main() {
       precoProduto: 10,
       imagemProduto: "imagemProduto",
       tagProduto: "tagProduto",
+      descricaoProduto: '',
     );
 
     expect(produto.precoProduto, 10);

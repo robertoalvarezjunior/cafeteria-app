@@ -9,8 +9,6 @@ void main() {
       emailUsuario: "emailUsuario",
       senhaUsuario: "senhaUsuario",
       numeroTelefoneUsuario: 'numeroTelefoneUsuario',
-      carrinhoUsuario: null,
-      enderecosUsuario: null,
     );
     expect(usuario, isNotNull);
   });

@@ -1,21 +1,24 @@
 import 'package:cafeteria_app/core/utils/getit_setup.dart';
-import 'package:cafeteria_app/features/domain/usecases/save_usuario_endereco/save_usuario_endereco.dart';
+import 'package:cafeteria_app/features/data/dtos/usuario_endereco_dto.dart';
+import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/save_usuario_endereco/save_usuario_endereco.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   getItSetup();
   test('salvar endereco ususario', () async {
+    var usuarioEndereco = UsuarioEnderecoDto(
+      id: null,
+      idUsuario: '6a63d82a-c0ce-4ce5-8b92-2a05184c84c4',
+      rua: 'rua',
+      numero: 'numero',
+      cidade: 'cidade',
+      estado: 'estado',
+      cep: 'cep',
+    );
     var salvarEndereco = await getIt<ISaveUsuarioEndereco>().saveUsuarioEndereco(
-        id: null,
-        idUsuario: "c5adf1ba-aee7-4e3d-95e3-f43d4140a679",
-        rua: 'rua teste',
-        cidade: 'cidade teste',
-        estado: 'estado teste',
-        cep: '88888888',
-        numero: 'numero teste',
-        complemento: 'complemento teste',
+        usuarioEndereco: usuarioEndereco,
         bearer:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhY2Nlc3NUb2tlbiIsImlzcyI6Imlzc3VlciIsImV4cCI6MTY5NDYwNTg4OCwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20ifQ.4Jxyrn00st4iTkRCoidiuTKT-wkdvlA8fz1VHkxn300');
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhY2Nlc3NUb2tlbiIsImlzcyI6Imlzc3VlciIsImV4cCI6MTY5NDY3NjI3NywiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20ifQ.lYJamD48qxwtVI6Ar_kTB-Pvlu5kUodAqCJ8Kvu35aI');
 
     expect(salvarEndereco, 'Endereço adicionado');
   });

@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:cafeteria_app/features/data/dtos/usuario_endereco_dto.dart';
 import 'package:cafeteria_app/features/domain/entities/usuario_entity.dart';
 
 class UsuarioDto extends UsuarioEntity {
@@ -10,7 +9,6 @@ class UsuarioDto extends UsuarioEntity {
   final String senha;
   final String nome;
   final String numeroTelefone;
-  final List<UsuarioEnderecoDto>? enderecos;
 
   UsuarioDto({
     this.idUsuario,
@@ -18,7 +16,6 @@ class UsuarioDto extends UsuarioEntity {
     required this.senha,
     required this.nome,
     required this.numeroTelefone,
-    this.enderecos,
   }) : super(
           idUsuarioUsuario: idUsuario,
           emailUsuario: email,
@@ -34,7 +31,6 @@ class UsuarioDto extends UsuarioEntity {
       'senha': senha,
       'nome': nome,
       'numeroTelefone': numeroTelefone,
-      'enderecos': enderecos!.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -45,13 +41,6 @@ class UsuarioDto extends UsuarioEntity {
       senha: map['senha'] as String,
       nome: map['nome'] as String,
       numeroTelefone: map['numeroTelefone'] as String,
-      enderecos: map['enderecos'] != null
-          ? List<UsuarioEnderecoDto>.from(
-              (map['enderecos'] as List<int>).map<UsuarioEnderecoDto?>(
-                (x) => UsuarioEnderecoDto.fromMap(x as Map<String, dynamic>),
-              ),
-            )
-          : null,
     );
   }
 
