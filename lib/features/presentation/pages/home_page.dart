@@ -1,39 +1,24 @@
+import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
 import 'package:cafeteria_app/features/presentation/bloc/produtos_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePageView extends StatefulWidget {
+class HomePageView extends StatelessWidget {
   const HomePageView({super.key});
 
   @override
-  State<HomePageView> createState() => _HomePageViewState();
-}
-
-class _HomePageViewState extends State<HomePageView> {
-  final ProdutosBloc _produtosBloc = ProdutosBloc();
-
-  @override
-  void initState() {
-    _produtosBloc.add(GetProdutosEvent());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _produtosBloc,
-      child: BlocListener<ProdutosBloc, ProdutosState>(
-        listener: (context, state) {
-          if (state is ErrorProdutosState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-              ),
-            );
-          }
-        },
-        child: const _ListaProdutosView(),
-      ),
+    return BlocListener<ProdutosBloc, IProdutosState>(
+      listener: (context, state) {
+        if (state is ErrorProdutosState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }
+      },
+      child: const _ListaProdutosView(),
     );
   }
 }
@@ -43,9 +28,20 @@ class _ListaProdutosView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProdutosBloc, ProdutosState>(
+    return BlocBuilder<ProdutosBloc, IProdutosState>(
       builder: (context, state) => Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                context.read<UsuarioInfosBloc>().add(
+                    const SalvarUsuarioInfosEvent(
+                        usuario: 'teste@teste.com', senha: '1234'));
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
         body: switch (state) {
           InitialProdutosState() => const Center(
               child: CircularProgressIndicator.adaptive(),
@@ -64,8 +60,8 @@ class _ListaProdutosView extends StatelessWidget {
                 );
               },
             ),
-          ErrorProdutosState() => const Center(
-              child: Text("Erro"),
+          ErrorProdutosState() => Center(
+              child: Text(state.message),
             ),
         },
       ),

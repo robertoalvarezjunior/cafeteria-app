@@ -1,4 +1,4 @@
 abstract class IGetUsuario {
-  Future<Map<String, dynamic>> getUsuario(
+  Future<Map<String, String>> getUsuario(
       {required String email, required String senha});
 }

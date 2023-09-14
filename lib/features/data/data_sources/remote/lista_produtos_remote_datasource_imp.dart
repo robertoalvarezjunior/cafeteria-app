@@ -10,16 +10,16 @@ class ListaProdtutosRemoteDataSourceImp implements IListaProdutosDataSource {
   @override
   Future<List<ProdutosEntity>> listaProdutos() async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/produtos");
+      var url = Uri.parse("http://10.40.10.55:8080/produtos");
       http.Response response = await http.get(
         url,
       );
 
-      List decodeBody = jsonDecode(response.body);
       if (response.statusCode >= 200 && response.statusCode < 300) {
+        List decodeBody = jsonDecode(response.body);
         return decodeBody.map((e) => ProdutosDto.fromMap(e)).toList();
       } else {
-        throw CatchError(message: decodeBody.toString());
+        throw CatchError(message: response.body.toString());
       }
     } catch (e) {
       throw CatchError(message: e.toString());

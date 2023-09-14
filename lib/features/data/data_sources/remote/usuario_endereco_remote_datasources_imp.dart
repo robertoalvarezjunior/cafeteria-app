@@ -12,7 +12,7 @@ final class UsuarioEnderecoRemoteDataSourcesImp
   Future<String> deleteUsuarioEndereco(
       {required String idUsuario, required String bearer}) async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/usuarioEndereco/$idUsuario");
+      var url = Uri.parse("http://10.40.10.55:8080/usuarioEndereco/$idUsuario");
 
       http.Response response = await http.delete(url, headers: {
         "Accept": "application/json",
@@ -33,7 +33,7 @@ final class UsuarioEnderecoRemoteDataSourcesImp
   Future<List<UsuarioEnderecoEntity>> getUsuarioEnderecos(
       {required String idUsuario, required String bearer}) async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/usuarioEndereco/$idUsuario");
+      var url = Uri.parse("http://10.40.10.55:8080/usuarioEndereco/$idUsuario");
       http.Response response = await http.get(url, headers: {
         "Accept": "application/json",
         "Authorization": "Bearer $bearer"
@@ -57,7 +57,7 @@ final class UsuarioEnderecoRemoteDataSourcesImp
     required String bearer,
   }) async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/usuarioEndereco");
+      var url = Uri.parse("http://10.40.10.55:8080/usuarioEndereco");
       http.Response response = await http.post(url,
           body: usuarioEndereco.toJson(),
           headers: {"Authorization": "Bearer $bearer"});

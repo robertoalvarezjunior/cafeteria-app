@@ -10,11 +10,12 @@ final class UsuarioDataSourcesImp implements IUsuarioDataSources {
   getUsuario({required String email, required String senha}) async {
     try {
       var url =
-          Uri.parse("http://172.31.32.1:8080/usuario/login/$email/$senha");
+          Uri.parse("http://10.40.10.55:8080/usuario/login/$email/$senha");
       http.Response response = await http.post(url);
 
       if (response.statusCode >= 200 && response.statusCode < 300) {
         var body = jsonDecode(response.body);
+
         return {
           "token": body["token"],
           "usuario": body["usuario"],
@@ -30,7 +31,7 @@ final class UsuarioDataSourcesImp implements IUsuarioDataSources {
   @override
   Future<String> saveUsuario({required UsuarioDto usuario}) async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/usuario/cadastro");
+      var url = Uri.parse("http://10.40.10.55:8080/usuario/cadastro");
       http.Response response = await http.post(url, body: usuario.toJson());
 
       if (response.statusCode >= 200 && response.statusCode < 300) {

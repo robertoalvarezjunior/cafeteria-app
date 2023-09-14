@@ -9,15 +9,23 @@ import 'package:equatable/equatable.dart';
 part 'produtos_event.dart';
 part 'produtos_state.dart';
 
-final class ProdutosBloc extends Bloc<ProdutosEvent, ProdutosState> {
+sealed class IProdutosBloc extends Bloc<IProdutosEvent, IProdutosState> {
   late final IGetListaProdutos _getListaProdutos;
 
-  ProdutosBloc() : super(InitialProdutosState()) {
+  IProdutosBloc(super.initialState) {
     _getListaProdutos = GetListaProdutosImp();
     on<GetProdutosEvent>(_getProdutos);
   }
 
-  void _getProdutos(GetProdutosEvent event, Emitter<ProdutosState> emit) async {
+  void _getProdutos(GetProdutosEvent event, Emitter<IProdutosState> emit);
+}
+
+final class ProdutosBloc extends IProdutosBloc {
+  ProdutosBloc() : super(InitialProdutosState());
+
+  @override
+  void _getProdutos(
+      GetProdutosEvent event, Emitter<IProdutosState> emit) async {
     try {
       emit(LoadingProdutosState());
       final produtos = await _getListaProdutos.listaProdutos();

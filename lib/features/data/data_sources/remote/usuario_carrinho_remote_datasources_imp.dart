@@ -13,7 +13,7 @@ final class UsuarioCarrinhoRemoteDataSourcesImp
       {required UsuarioCarrinhoDto usuarioCarrinho,
       required String bearer}) async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/usuarioCarrinho");
+      var url = Uri.parse("http://10.40.10.55:8080/usuarioCarrinho");
 
       http.Response response = await http.post(url,
           body: usuarioCarrinho.toJson(),
@@ -39,7 +39,7 @@ final class UsuarioCarrinhoRemoteDataSourcesImp
       required String bearer}) async {
     try {
       var url =
-          Uri.parse("http://172.31.32.1:8080/usuarioCarrinho/$id/$quantidade");
+          Uri.parse("http://10.40.10.55:8080/usuarioCarrinho/$id/$quantidade");
 
       http.Response response = await http.put(url, headers: {
         'Accept': 'application/json',
@@ -60,7 +60,7 @@ final class UsuarioCarrinhoRemoteDataSourcesImp
   Future<List<UsuarioCarrinhoEntity>> getUsuarioCarrinho(
       {required String idUsuario, required String bearer}) async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/usuarioCarrinho/$idUsuario");
+      var url = Uri.parse("http://10.40.10.55:8080/usuarioCarrinho/$idUsuario");
 
       http.Response response = await http.get(url, headers: {
         'Accept': 'application/json',
@@ -82,7 +82,7 @@ final class UsuarioCarrinhoRemoteDataSourcesImp
   Future<String> deleteItemCarrinho(
       {required String id, required String bearer}) async {
     try {
-      var url = Uri.parse("http://172.31.32.1:8080/usuarioCarrinho/$id");
+      var url = Uri.parse("http://10.40.10.55:8080/usuarioCarrinho/$id");
 
       http.Response response = await http.delete(url, headers: {
         'Accept': 'application/json',

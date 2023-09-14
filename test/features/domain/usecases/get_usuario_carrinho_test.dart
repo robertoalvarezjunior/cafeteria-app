@@ -9,7 +9,7 @@ void main() {
     var result = await getIt<IGetUsuarioCarrinho>().getUsuarioCarrinho(
         idUsuario: 'c5adf1ba-aee7-4e3d-95e3-f43d4140a679',
         bearer:
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhY2Nlc3NUb2tlbiIsImlzcyI6Imlzc3VlciIsImV4cCI6MTY5NDY4ODY5NSwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20ifQ.9_GNuniqs8BEgS4C0G7JDEBEd5Ulok2mdvwTBBlAhqA');
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhY2Nlc3NUb2tlbiIsImlzcyI6Imlzc3VlciIsImV4cCI6MTY5NDc3MjY1NiwiZW1haWwiOiJ0ZXN0ZUB0ZXN0ZS5jb20ifQ.-HF42sK2dGtcvGq8iuwTZDOnOrMK0CPTu3lqOQGvYbk');
 
     expect(result, isInstanceOf<List<UsuarioCarrinhoEntity>>());
   });
