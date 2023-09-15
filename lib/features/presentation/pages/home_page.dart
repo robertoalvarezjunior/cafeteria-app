@@ -1,5 +1,5 @@
-import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
-import 'package:cafeteria_app/features/presentation/bloc/produtos_bloc.dart';
+import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
+import 'package:cafeteria_app/features/presentation/widgets/produtos/itens_produtos_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,40 +30,41 @@ class _ListaProdutosView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProdutosBloc, IProdutosState>(
       builder: (context, state) => Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {
-                context.read<UsuarioInfosBloc>().add(
-                    const SalvarUsuarioInfosEvent(
-                        usuario: 'teste@teste.com', senha: '1234'));
-              },
-              icon: const Icon(Icons.add),
+        body: SafeArea(
+          child: switch (state) {
+            InitialProdutosState() => const Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            EmptyProdutosState() => const Center(
+                child: Text("Lista de produtos vazia"),
+              ),
+            LoadingProdutosState() => const Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            LoadedProdutosState() => ItensProdutosWidget(state: state),
+            ErrorProdutosState() => Center(
+                child: Text(state.message),
+              ),
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_rounded),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart_rounded),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu_rounded),
+              label: '',
             ),
           ],
         ),
-        body: switch (state) {
-          InitialProdutosState() => const Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
-          EmptyProdutosState() => const Center(
-              child: Text("Lista de produtos vazia"),
-            ),
-          LoadingProdutosState() => const Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
-          LoadedProdutosState() => ListView.builder(
-              itemCount: state.produtos.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(state.produtos[index].nomeProduto),
-                );
-              },
-            ),
-          ErrorProdutosState() => Center(
-              child: Text(state.message),
-            ),
-        },
       ),
     );
   }

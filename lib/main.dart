@@ -1,7 +1,7 @@
 import 'package:cafeteria_app/config/routes/rotas.dart';
 import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
 import 'package:cafeteria_app/core/utils/getit_setup.dart';
-import 'package:cafeteria_app/features/presentation/bloc/produtos_bloc.dart';
+import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
