@@ -22,23 +22,21 @@ class ProdutosPage extends StatelessWidget {
       },
       child: BlocBuilder<ProdutosBloc, IProdutosState>(
         builder: (context, state) => Scaffold(
-          body: SafeArea(
-            child: switch (state) {
-              InitialProdutosState() => const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                ),
-              EmptyProdutosState() => const Center(
-                  child: Text("Lista de produtos vazia"),
-                ),
-              LoadingProdutosState() => const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                ),
-              LoadedProdutosState() => ItensProdutosWidget(state: state),
-              ErrorProdutosState() => Center(
-                  child: Text(state.message),
-                ),
-            },
-          ),
+          body: switch (state) {
+            InitialProdutosState() => const Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            EmptyProdutosState() => const Center(
+                child: Text("Lista de produtos vazia"),
+              ),
+            LoadingProdutosState() => const Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            LoadedProdutosState() => ItensProdutosWidget(state: state),
+            ErrorProdutosState() => Center(
+                child: Text(state.message),
+              ),
+          },
         ),
       ),
     );

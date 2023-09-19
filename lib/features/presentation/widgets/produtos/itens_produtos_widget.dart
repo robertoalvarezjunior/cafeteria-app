@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+
 import 'package:cafeteria_app/config/theme/color_theme.dart';
 import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
 import 'package:cafeteria_app/features/presentation/widgets/produtos/bolo_widget.dart';
 import 'package:cafeteria_app/features/presentation/widgets/produtos/cafe_widget.dart';
 import 'package:cafeteria_app/features/presentation/widgets/produtos/cha_widget.dart';
-import 'package:flutter/material.dart';
 
 class ItensProdutosWidget extends StatelessWidget {
   const ItensProdutosWidget({

@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
 
@@ -12,32 +15,35 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController senhaController = TextEditingController();
-  final TextEditingController nomeController = TextEditingController();
-  final TextEditingController numeroTelefoneController =
+  final TextEditingController emailLoginController = TextEditingController();
+  final TextEditingController senhaLoginController = TextEditingController();
+  final TextEditingController emailCadastroController = TextEditingController();
+  final TextEditingController senhaCadastroController = TextEditingController();
+  final TextEditingController nomeCadastroController = TextEditingController();
+  final TextEditingController numeroTelefoneCadastroController =
       TextEditingController();
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKeyLogin = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKeyCadastro = GlobalKey<FormState>();
 
-  bool cadastro = true;
+  bool verSenhaLogin = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: formKey,
+        key: _formKeyLogin,
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
             children: [
               const Spacer(),
               TextFormField(
-                controller: emailController,
+                controller: emailLoginController,
                 decoration: const InputDecoration(labelText: 'E-mail'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
-                  } else if (!emailController.text.contains('@')) {
+                  } else if (!emailLoginController.text.contains('@')) {
                     return 'email inválido';
                   }
                   return null;
@@ -45,8 +51,19 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 15),
               TextFormField(
-                controller: senhaController,
-                decoration: const InputDecoration(labelText: 'Senha'),
+                controller: senhaLoginController,
+                decoration: InputDecoration(
+                  labelText: 'Senha',
+                  suffixIcon: IconButton(
+                    onPressed: () => setState(() {
+                      verSenhaLogin = !verSenhaLogin;
+                    }),
+                    icon: !verSenhaLogin
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+                  ),
+                ),
+                obscureText: !verSenhaLogin,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
@@ -54,63 +71,125 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
               ),
-              cadastro ? Container() : const SizedBox(height: 15),
-              Offstage(
-                offstage: cadastro,
-                child: TextFormField(
-                  controller: nomeController,
-                  decoration: const InputDecoration(labelText: 'Nome'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Campo obrigatório';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              cadastro ? Container() : const SizedBox(height: 15),
-              Offstage(
-                offstage: cadastro,
-                child: TextFormField(
-                  controller: numeroTelefoneController,
-                  decoration:
-                      const InputDecoration(labelText: 'Número Celular'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Campo obrigatório';
-                    }
-                    return null;
-                  },
-                ),
-              ),
+              const SizedBox(height: 15),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () => setState(() {
-                      cadastro = !cadastro;
-                    }),
-                    child: Text(!cadastro ? 'Tenho Conta' : 'Não tenho Conto'),
+                    onPressed: () {},
+                    child: const Text('Recuperar Senha'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      bool verSenhaCadastro = false;
+
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          constraints: BoxConstraints(
+                              maxHeight:
+                                  MediaQuery.of(context).size.height * 1),
+                          builder: (context) {
+                            return SingleChildScrollView(
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: Form(
+                                  key: _formKeyCadastro,
+                                  child: Column(
+                                    children: [
+                                      TextFormField(
+                                        controller: nomeCadastroController,
+                                        decoration: const InputDecoration(
+                                            labelText: 'Nome'),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Campo obrigatório';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: 10),
+                                      TextFormField(
+                                        controller:
+                                            numeroTelefoneCadastroController,
+                                        decoration: const InputDecoration(
+                                            labelText: 'Número Celular'),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Campo obrigatório';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: 10),
+                                      TextFormField(
+                                        controller: emailCadastroController,
+                                        decoration: const InputDecoration(
+                                            labelText: 'Email'),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Campo obrigatório';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: 10),
+                                      TextFormField(
+                                        controller: senhaCadastroController,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Senha',
+                                        ),
+                                        obscureText: true,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Campo obrigatório';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      const SizedBox(height: 10),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          if (_formKeyCadastro.currentState!
+                                              .validate()) {
+                                            context.read<IUsuarioBloc>().add(
+                                                CadastroUsuarioEvent(
+                                                    nomeCadastroController.text,
+                                                    numeroTelefoneCadastroController
+                                                        .text,
+                                                    context,
+                                                    usuario:
+                                                        emailCadastroController
+                                                            .text,
+                                                    senha:
+                                                        senhaCadastroController
+                                                            .text));
+                                            context.pop();
+                                          }
+                                        },
+                                        child: const Text('Cadastrar'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    child: const Text('Fazer Cadastro'),
                   ),
                 ],
               ),
               ElevatedButton(
                 onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    !cadastro
-                        ? context.read<IUsuarioBloc>().add(CadastroUsuarioEvent(
-                            nomeController.text,
-                            numeroTelefoneController.text,
-                            context,
-                            usuario: emailController.text,
-                            senha: senhaController.text))
-                        : context.read<IUsuarioBloc>().add(LoginUsuarioEvent(
-                            null, null, context,
-                            usuario: emailController.text,
-                            senha: senhaController.text));
+                  if (_formKeyLogin.currentState!.validate()) {
+                    context.read<IUsuarioBloc>().add(LoginUsuarioEvent(
+                        null, null, context,
+                        usuario: emailLoginController.text,
+                        senha: senhaLoginController.text));
                   }
                 },
-                child: Text(!cadastro ? 'Cadastrar' : 'Logar'),
+                child: const Text('Logar'),
               ),
               const Spacer(),
             ],

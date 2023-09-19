@@ -16,33 +16,31 @@ class HomePageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProdutosBloc, IProdutosState>(
-      builder: (context, state) => Scaffold(
-        body: child,
-        bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_rounded),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_2),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_rounded),
-              label: '',
-            ),
-          ],
-          currentIndex: _calculateSelectedIndex(context),
-          onTap: (value) => _onItemTapped(value, context),
-        ),
+    return Scaffold(
+      body: SafeArea(child: child),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart_rounded),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_rounded),
+            label: '',
+          ),
+        ],
+        currentIndex: _calculateSelectedIndex(context),
+        onTap: (value) => _onItemTapped(value, context),
       ),
     );
   }
