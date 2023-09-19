@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
 import 'package:cafeteria_app/features/data/data_sources/lista_produtos_datasources.dart';
 import 'package:cafeteria_app/features/data/dtos/produtos_dto.dart';
 import 'package:cafeteria_app/features/domain/entities/error.dart';
 import 'package:cafeteria_app/features/domain/entities/produtos_entity.dart';
-import 'package:http/http.dart' as http;
 
 class ListaProdtutosRemoteDataSourceImp implements IListaProdutosDataSource {
   @override

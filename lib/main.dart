@@ -1,10 +1,13 @@
+import 'package:flutter/material.dart';
+
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:cafeteria_app/config/routes/rotas.dart';
 import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
 import 'package:cafeteria_app/core/utils/getit_setup.dart';
 import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
 
 void main() {
   getItSetup();
@@ -21,6 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final IUsuarioInfosBloc _usuarioInfosBloc = UsuarioInfosBloc();
   final ProdutosBloc _produtosBloc = ProdutosBloc();
+  final IUsuarioBloc _usuarioBloc = UsuarioBloc();
 
   @override
   void initState() {
@@ -35,6 +39,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (context) => _usuarioInfosBloc),
         BlocProvider(create: (context) => _produtosBloc),
+        BlocProvider(create: (context) => _usuarioBloc),
       ],
       child: MaterialApp.router(
         routerConfig: Rotas().rotas,

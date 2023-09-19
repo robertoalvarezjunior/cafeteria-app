@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:cafeteria_app/core/utils/getit_setup.dart';
-import 'package:cafeteria_app/features/domain/usecases/usuario/get_usuario/get_usuario.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,7 +8,7 @@ part 'usuario_infos_event.dart';
 part 'usuario_infos_state.dart';
 
 sealed class IUsuarioInfosBloc
-    extends Bloc<UsuarioInfosEvent, UsuarioInfosState> {
+    extends Bloc<IUsuarioInfosEvent, IUsuarioInfosState> {
   Map<String, Map<String, dynamic>?> usuario = {
     'usuario': null,
   };
@@ -22,10 +20,10 @@ sealed class IUsuarioInfosBloc
   }
 
   void _saveUsuarioInfos(
-      UsuarioInfosEvent event, Emitter<UsuarioInfosState> emit);
+      IUsuarioInfosEvent event, Emitter<IUsuarioInfosState> emit);
 
   Future<void> _startSettings(
-      UsuarioInfosEvent event, Emitter<UsuarioInfosState> emit);
+      IUsuarioInfosEvent event, Emitter<IUsuarioInfosState> emit);
 }
 
 final class UsuarioInfosBloc extends IUsuarioInfosBloc {
@@ -33,15 +31,13 @@ final class UsuarioInfosBloc extends IUsuarioInfosBloc {
 
   @override
   void _saveUsuarioInfos(
-      UsuarioInfosEvent event, Emitter<UsuarioInfosState> emit) {
-    getIt<IGetUsuario>()
-        .getUsuario(email: event.usuario!, senha: event.senha!)
-        .then((value) => _saveUsuarioInfosLocal(value));
+      IUsuarioInfosEvent event, Emitter<IUsuarioInfosState> emit) {
+    _saveUsuarioInfosLocal({'usuario': event.usuario!, 'token': event.token!});
   }
 
   @override
   Future<void> _startSettings(
-      UsuarioInfosEvent event, Emitter<UsuarioInfosState> emit) async {
+      IUsuarioInfosEvent event, Emitter<IUsuarioInfosState> emit) async {
     await _startPreferences();
     await _readUsuarioInfos();
   }

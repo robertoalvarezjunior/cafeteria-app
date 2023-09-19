@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
+
 abstract class IGetUsuario {
-  Future<Map<String, String>> getUsuario(
+  Future<void> getUsuario(BuildContext context,
       {required String email, required String senha});
 }

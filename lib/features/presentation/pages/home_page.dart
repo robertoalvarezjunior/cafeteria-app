@@ -1,52 +1,24 @@
-import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
-import 'package:cafeteria_app/features/presentation/widgets/produtos/itens_produtos_widget.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
 
 class HomePageView extends StatelessWidget {
-  const HomePageView({super.key});
+  const HomePageView({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<ProdutosBloc, IProdutosState>(
-      listener: (context, state) {
-        if (state is ErrorProdutosState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-            ),
-          );
-        }
-      },
-      child: const _ListaProdutosView(),
-    );
-  }
-}
-
-class _ListaProdutosView extends StatelessWidget {
-  const _ListaProdutosView();
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProdutosBloc, IProdutosState>(
       builder: (context, state) => Scaffold(
-        body: SafeArea(
-          child: switch (state) {
-            InitialProdutosState() => const Center(
-                child: CircularProgressIndicator.adaptive(),
-              ),
-            EmptyProdutosState() => const Center(
-                child: Text("Lista de produtos vazia"),
-              ),
-            LoadingProdutosState() => const Center(
-                child: CircularProgressIndicator.adaptive(),
-              ),
-            LoadedProdutosState() => ItensProdutosWidget(state: state),
-            ErrorProdutosState() => Center(
-                child: Text(state.message),
-              ),
-          },
-        ),
+        body: child,
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
@@ -60,12 +32,51 @@ class _ListaProdutosView extends StatelessWidget {
               label: '',
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.person_2),
+              label: '',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.menu_rounded),
               label: '',
             ),
           ],
+          currentIndex: _calculateSelectedIndex(context),
+          onTap: (value) => _onItemTapped(value, context),
         ),
       ),
     );
+  }
+
+  int _calculateSelectedIndex(BuildContext context) {
+    final String location = GoRouterState.of(context).uri.toString();
+    if (location.startsWith('/produtos')) {
+      return 0;
+    }
+    if (location.startsWith('/carrinho')) {
+      return 1;
+    }
+    if (location.startsWith('/usaurio')) {
+      return 2;
+    }
+    if (location.startsWith('/pedidos')) {
+      return 3;
+    }
+    return 0;
+  }
+
+  void _onItemTapped(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        GoRouter.of(context).go('/produtos');
+        break;
+      case 1:
+        GoRouter.of(context).go('/carrinho');
+        break;
+      case 2:
+        GoRouter.of(context).go('/usaurio');
+      case 3:
+        GoRouter.of(context).go('/pedidos');
+        break;
+    }
   }
 }
