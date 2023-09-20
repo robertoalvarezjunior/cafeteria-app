@@ -1,10 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
 
 class HomePageView extends StatelessWidget {
   const HomePageView({

@@ -9,11 +9,7 @@ part 'usuario_infos_state.dart';
 
 sealed class IUsuarioInfosBloc
     extends Bloc<IUsuarioInfosEvent, IUsuarioInfosState> {
-  Map<String, Map<String, dynamic>?> usuario = {
-    'usuario': null,
-  };
   late SharedPreferences _prefs;
-  String? token;
   IUsuarioInfosBloc(super.initialState) {
     on<SalvarUsuarioInfosEvent>(_saveUsuarioInfos);
     on<GetUsuarioInfosEvent>(_startSettings);
@@ -27,7 +23,7 @@ sealed class IUsuarioInfosBloc
 }
 
 final class UsuarioInfosBloc extends IUsuarioInfosBloc {
-  UsuarioInfosBloc() : super(UsuarioInfosInitialState());
+  UsuarioInfosBloc() : super(LoadingUsuarioInfosState());
 
   @override
   void _saveUsuarioInfos(
@@ -38,8 +34,18 @@ final class UsuarioInfosBloc extends IUsuarioInfosBloc {
   @override
   Future<void> _startSettings(
       IUsuarioInfosEvent event, Emitter<IUsuarioInfosState> emit) async {
-    await _startPreferences();
-    await _readUsuarioInfos();
+    try {
+      await _startPreferences();
+      emit(LoadingUsuarioInfosState());
+      ({Map<String, dynamic> usuario, String? token}) lerInfos =
+          await _readUsuarioInfos();
+      //copiar o emptyProdutos
+
+      emit(UsuarioInfosInitialState(
+          usuario: lerInfos.usuario['usuario'], token: lerInfos.token));
+    } catch (e) {
+      emit(ErrorUsuarioInfoState(e.toString()));
+    }
   }
 
   Future<void> _startPreferences() async {
@@ -55,13 +61,16 @@ final class UsuarioInfosBloc extends IUsuarioInfosBloc {
     await _readUsuarioInfos();
   }
 
-  Future<void> _readUsuarioInfos() async {
+  Future<({Map<String, dynamic> usuario, String? token})>
+      _readUsuarioInfos() async {
     final String? tokenShared = _prefs.getString('token');
     final String? usuarioShared = _prefs.getString('usuario');
 
-    usuario = {
-      'usuario': usuarioShared != null ? jsonDecode(usuarioShared) : null
-    };
-    token = tokenShared;
+    return (
+      usuario: <String, Map<String, dynamic>?>{
+        'usuario': usuarioShared != null ? jsonDecode(usuarioShared) : null,
+      },
+      token: tokenShared
+    );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
 import 'package:cafeteria_app/features/domain/entities/error.dart';
 import 'package:cafeteria_app/features/domain/entities/produtos_entity.dart';
 import 'package:cafeteria_app/features/domain/usecases/lista_produtos/get_lista_produtos.dart';
 import 'package:cafeteria_app/features/domain/usecases/lista_produtos/get_lista_produtos_imp.dart';
-
-import 'package:equatable/equatable.dart';
 
 part 'produtos_event.dart';
 part 'produtos_state.dart';
@@ -21,7 +21,7 @@ sealed class IProdutosBloc extends Bloc<IProdutosEvent, IProdutosState> {
 }
 
 final class ProdutosBloc extends IProdutosBloc {
-  ProdutosBloc() : super(InitialProdutosState());
+  ProdutosBloc() : super(LoadingProdutosState());
 
   @override
   void _getProdutos(

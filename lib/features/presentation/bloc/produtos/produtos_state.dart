@@ -7,8 +7,6 @@ sealed class IProdutosState extends Equatable {
   List<Object?> get props => [];
 }
 
-final class InitialProdutosState extends IProdutosState {}
-
 final class EmptyProdutosState extends IProdutosState {}
 
 final class LoadingProdutosState extends IProdutosState {}

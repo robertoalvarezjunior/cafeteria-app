@@ -23,9 +23,6 @@ class ProdutosPage extends StatelessWidget {
       child: BlocBuilder<ProdutosBloc, IProdutosState>(
         builder: (context, state) => Scaffold(
           body: switch (state) {
-            InitialProdutosState() => const Center(
-                child: CircularProgressIndicator.adaptive(),
-              ),
             EmptyProdutosState() => const Center(
                 child: Text("Lista de produtos vazia"),
               ),

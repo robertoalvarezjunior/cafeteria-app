@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
@@ -18,7 +17,8 @@ final class UsuarioDataSourcesImp implements IUsuarioDataSources {
     http.post(url).then((http.Response response) {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         var body = jsonDecode(response.body);
-        context.read<IUsuarioInfosBloc>().add(SalvarUsuarioInfosEvent(
+        IUsuarioInfosBloc salvarUsuarioInfosBloc = UsuarioInfosBloc();
+        salvarUsuarioInfosBloc.add(SalvarUsuarioInfosEvent(
             usuario: body["usuario"], token: body["token"]));
       } else if (response.statusCode >= 400 && response.statusCode < 500) {
         ScaffoldMessenger.of(context).showSnackBar(

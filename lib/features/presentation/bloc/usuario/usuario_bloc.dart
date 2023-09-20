@@ -24,7 +24,7 @@ sealed class IUsuarioBloc extends Bloc<IUsuarioEvent, IUsuarioState> {
 }
 
 final class UsuarioBloc extends IUsuarioBloc {
-  UsuarioBloc() : super(LoginUsuarioState());
+  UsuarioBloc() : super(InitialUsuarioState());
 
   @override
   void _cadastroUsuario(IUsuarioEvent event, Emitter<IUsuarioState> emit) {
@@ -51,8 +51,22 @@ final class UsuarioBloc extends IUsuarioBloc {
   @override
   void _loginUsuario(IUsuarioEvent event, Emitter<IUsuarioState> emit) {
     try {
-      getIt<IGetUsuario>().getUsuario(event.context,
-          email: event.usuario!, senha: event.senha!);
+      getIt<IGetUsuario>()
+          .getUsuario(event.context, email: event.usuario!, senha: event.senha!)
+          .then(
+        (value) {
+          ScaffoldMessenger.of(event.context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Login efetuado com sucesso',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+
+          emit(LoginSuccessUsuarioState());
+        },
+      );
     } on CatchError catch (e) {
       emit(ErrorUsuarioState(e.message));
     }

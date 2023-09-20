@@ -37,6 +37,7 @@ import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/get_usua
 import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/get_usuario_endereco/get_usuario_endereco_imp.dart';
 import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/save_usuario_endereco/save_usuario_endereco.dart';
 import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/save_usuario_endereco/save_usuario_endereco_imp.dart';
+import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -71,4 +72,5 @@ void getItSetup() {
       ListaProdtutosRemoteDataSourceImp());
 
   getIt.registerSingleton<IUsuarioInfosBloc>(UsuarioInfosBloc());
+  getIt.registerSingleton<IUsuarioBloc>(UsuarioBloc());
 }

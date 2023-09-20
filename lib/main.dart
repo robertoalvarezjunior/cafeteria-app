@@ -24,7 +24,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final IUsuarioInfosBloc _usuarioInfosBloc = UsuarioInfosBloc();
   final ProdutosBloc _produtosBloc = ProdutosBloc();
-  final IUsuarioBloc _usuarioBloc = UsuarioBloc();
 
   @override
   void initState() {
@@ -39,7 +38,8 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (context) => _usuarioInfosBloc),
         BlocProvider(create: (context) => _produtosBloc),
-        BlocProvider(create: (context) => _usuarioBloc),
+        BlocProvider(create: (context) => getIt<IUsuarioInfosBloc>()),
+        BlocProvider(create: (context) => getIt<IUsuarioBloc>()),
       ],
       child: MaterialApp.router(
         routerConfig: Rotas().rotas,
