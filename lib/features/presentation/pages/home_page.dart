@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
@@ -50,7 +49,7 @@ class HomePageView extends StatelessWidget {
     if (location.startsWith('/carrinho')) {
       return 1;
     }
-    if (location.startsWith('/usaurio')) {
+    if (location.startsWith('/usuario')) {
       return 2;
     }
     if (location.startsWith('/pedidos')) {
@@ -68,7 +67,8 @@ class HomePageView extends StatelessWidget {
         GoRouter.of(context).go('/carrinho');
         break;
       case 2:
-        GoRouter.of(context).go('/usaurio');
+        GoRouter.of(context).go('/usuario');
+        break;
       case 3:
         GoRouter.of(context).go('/pedidos');
         break;

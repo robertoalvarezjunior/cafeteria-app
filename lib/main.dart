@@ -4,7 +4,6 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:cafeteria_app/config/routes/rotas.dart';
-import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
 import 'package:cafeteria_app/core/utils/getit_setup.dart';
 import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
@@ -22,12 +21,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final IUsuarioInfosBloc _usuarioInfosBloc = UsuarioInfosBloc();
+  final IUsuarioBloc _usuarioBloc = getIt<IUsuarioBloc>();
   final ProdutosBloc _produtosBloc = ProdutosBloc();
 
   @override
   void initState() {
-    _usuarioInfosBloc.add(const GetUsuarioInfosEvent());
+    _usuarioBloc.add(const GetInfosUsuarioEvent());
     _produtosBloc.add(GetProdutosEvent());
     super.initState();
   }
@@ -36,10 +35,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => _usuarioInfosBloc),
+        BlocProvider(create: (context) => _usuarioBloc),
         BlocProvider(create: (context) => _produtosBloc),
-        BlocProvider(create: (context) => getIt<IUsuarioInfosBloc>()),
-        BlocProvider(create: (context) => getIt<IUsuarioBloc>()),
       ],
       child: MaterialApp.router(
         routerConfig: Rotas().rotas,

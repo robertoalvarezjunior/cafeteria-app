@@ -2,48 +2,45 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
-import 'package:cafeteria_app/features/presentation/widget/login/login_cadastro_widget.dart';
+import 'package:cafeteria_app/features/presentation/widgets/login/login_cadastro_widget.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<IUsuarioInfosBloc, IUsuarioInfosState>(
-      builder: (context, stateInfo) {
-        return BlocBuilder<IUsuarioBloc, IUsuarioState>(
-          builder: (context, state) {
-            return Scaffold(
-              body: switch (stateInfo) {
-                LoadingUsuarioInfosState() => const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  ),
-                UsuarioInfosInitialState() => switch (state) {
-                    InitialUsuarioState() => LoginCadastroWidget(
-                        token: stateInfo.token,
-                      ),
-                    LoginSuccessUsuarioState() => const Center(
-                        child: Text('Logado'),
-                      ),
-                    ErrorUsuarioState() => Center(
-                        child: Text(state.message),
-                      ),
-                  },
-                ErrorUsuarioInfoState() => Center(
-                    child: Text(stateInfo.message),
-                  ),
-              },
-            );
-          },
-        );
+    return BlocListener<IUsuarioBloc, IUsuarioState>(
+      listener: (context, state) {
+        if (state is ErrorUsuarioState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }
       },
+      child: BlocBuilder<IUsuarioBloc, IUsuarioState>(
+        builder: (context, state) => Scaffold(
+          body: switch (state) {
+            InitialUsuarioState() => const LoginCadastroWidget(),
+            LoginSuccessUsuarioState() => const Center(
+                child: Text('Logado'),
+              ),
+            LoadingUsuarioState() => const Center(
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            LerInfosUsuarioState() => state.token == null
+                ? const LoginCadastroWidget()
+                : const Center(
+                    child: Text('Logado'),
+                  ),
+            ErrorUsuarioState() => Center(
+                child: Text(state.message),
+              ),
+          },
+        ),
+      ),
     );
   }
 }

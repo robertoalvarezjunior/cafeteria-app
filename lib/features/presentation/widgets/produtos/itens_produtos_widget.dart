@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:cafeteria_app/config/theme/color_theme.dart';
 import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
-import 'package:cafeteria_app/features/presentation/widgets/produtos/bolo_widget.dart';
-import 'package:cafeteria_app/features/presentation/widgets/produtos/cafe_widget.dart';
-import 'package:cafeteria_app/features/presentation/widgets/produtos/cha_widget.dart';
+import 'package:cafeteria_app/features/presentation/widgets/produtos/categorias_widget.dart';
+import 'package:cafeteria_app/features/presentation/widgets/produtos/itens_widget.dart';
 
-class ItensProdutosWidget extends StatelessWidget {
+class ItensProdutosWidget extends StatefulWidget {
   const ItensProdutosWidget({
     Key? key,
     required this.state,
@@ -15,92 +13,83 @@ class ItensProdutosWidget extends StatelessWidget {
   final LoadedProdutosState state;
 
   @override
+  State<ItensProdutosWidget> createState() => _ItensProdutosWidgetState();
+}
+
+class _ItensProdutosWidgetState extends State<ItensProdutosWidget> {
+  final List<GlobalKey> categorias = [GlobalKey(), GlobalKey(), GlobalKey()];
+  BuildContext? tabContext;
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    scrollController.addListener(_changeTabs);
+    super.initState();
+  }
+
+  _scrollTo(int index) async {
+    scrollController.removeListener(_changeTabs);
+    final categoria = categorias[index].currentContext!;
+
+    await Scrollable.ensureVisible(categoria,
+        duration: const Duration(milliseconds: 600));
+    scrollController.addListener(_changeTabs);
+  }
+
+  _changeTabs() {
+    late RenderBox box;
+
+    for (var i = 0; i < categorias.length; i++) {
+      box = categorias[i].currentContext!.findRenderObject() as RenderBox;
+      Offset position = box.localToGlobal(Offset.zero);
+
+      if (scrollController.offset >= position.dy) {
+        DefaultTabController.of(tabContext!)
+            .animateTo(i, duration: const Duration(milliseconds: 100));
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: colorTheme(context).surfaceVariant,
-              ),
-              width: MediaQuery.of(context).size.width * .2,
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Chá',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+    return DefaultTabController(
+      length: 3,
+      child: Builder(
+        builder: (context) {
+          tabContext = context;
+          return Scaffold(
+            appBar: TabBar(
+              dividerColor: Colors.transparent,
+              tabs: const [
+                Tab(child: Text('Café')),
+                Tab(child: Text('Chá')),
+                Tab(child: Text('Bolo')),
+              ],
+              onTap: (index) => _scrollTo(index),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  children: [
+                    CategoriasWidget(
+                        categoriaKey: categorias[0], categoria: 'Café'),
+                    ItensWidget(state: widget.state, tipo: 'cafe'),
+                    CategoriasWidget(
+                        categoriaKey: categorias[1], categoria: 'Chá'),
+                    ItensWidget(state: widget.state, tipo: 'cha'),
+                    CategoriasWidget(
+                        categoriaKey: categorias[2], categoria: 'Bolo'),
+                    ItensWidget(state: widget.state, tipo: 'bolo'),
+                  ],
                 ),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: colorTheme(context).surfaceVariant,
-              ),
-              width: MediaQuery.of(context).size.width * .2,
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Bolo',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: colorTheme(context).surfaceVariant,
-              ),
-              width: MediaQuery.of(context).size.width * .2,
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Café',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Café',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  CafeWidget(state: state),
-                  const Text(
-                    'Chá',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  ChaWidget(state: state),
-                  const Text(
-                    'Bolo',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  BoloWidget(state: state),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+          );
+        },
+      ),
     );
   }
 }

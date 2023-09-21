@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 
-import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
 import 'package:cafeteria_app/features/data/data_sources/lista_produtos_datasources.dart';
 import 'package:cafeteria_app/features/data/data_sources/remote/lista_produtos_remote_datasource_imp.dart';
 import 'package:cafeteria_app/features/data/data_sources/remote/usuario_carrinho_remote_datasources_imp.dart';
@@ -71,6 +70,5 @@ void getItSetup() {
   getIt.registerSingleton<IListaProdutosDataSource>(
       ListaProdtutosRemoteDataSourceImp());
 
-  getIt.registerSingleton<IUsuarioInfosBloc>(UsuarioInfosBloc());
   getIt.registerSingleton<IUsuarioBloc>(UsuarioBloc());
 }

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
-import 'package:cafeteria_app/core/local_storage/usuario_infos_bloc.dart';
 import 'package:cafeteria_app/features/data/data_sources/usuario_datasources.dart';
 import 'package:cafeteria_app/features/data/dtos/usuario_dto.dart';
 import 'package:cafeteria_app/features/domain/entities/error.dart';
+import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
 
 final class UsuarioDataSourcesImp implements IUsuarioDataSources {
   @override
@@ -17,8 +17,8 @@ final class UsuarioDataSourcesImp implements IUsuarioDataSources {
     http.post(url).then((http.Response response) {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         var body = jsonDecode(response.body);
-        IUsuarioInfosBloc salvarUsuarioInfosBloc = UsuarioInfosBloc();
-        salvarUsuarioInfosBloc.add(SalvarUsuarioInfosEvent(
+        IUsuarioBloc salvarUsuarioInfosBloc = UsuarioBloc();
+        salvarUsuarioInfosBloc.add(SalvarInfosUsuarioEvent(
             usuario: body["usuario"], token: body["token"]));
       } else if (response.statusCode >= 400 && response.statusCode < 500) {
         ScaffoldMessenger.of(context).showSnackBar(
