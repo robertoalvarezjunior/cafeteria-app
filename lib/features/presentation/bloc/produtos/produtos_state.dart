@@ -9,7 +9,7 @@ sealed class IProdutosState extends Equatable {
 
 final class EmptyProdutosState extends IProdutosState {}
 
-final class LoadingProdutosState extends IProdutosState {}
+final class InitialProdutosState extends IProdutosState {}
 
 final class ErrorProdutosState extends IProdutosState {
   final String message;

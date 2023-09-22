@@ -26,7 +26,7 @@ class ProdutosPage extends StatelessWidget {
             EmptyProdutosState() => const Center(
                 child: Text("Lista de produtos vazia"),
               ),
-            LoadingProdutosState() => const Center(
+            InitialProdutosState() => const Center(
                 child: CircularProgressIndicator.adaptive(),
               ),
             LoadedProdutosState() => ItensProdutosWidget(state: state),

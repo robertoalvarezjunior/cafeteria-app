@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:cafeteria_app/core/shared_preferences/shared_preferences_core.dart';
 import 'package:cafeteria_app/core/utils/getit_setup.dart';
 import 'package:cafeteria_app/features/data/dtos/usuario_dto.dart';
 import 'package:cafeteria_app/features/domain/usecases/usuario/get_usuario/get_usuario.dart';
@@ -98,6 +99,7 @@ final class UsuarioBloc extends IUsuarioBloc {
       ({Map<String, dynamic> usuario, String? token}) lerInfos =
           await _readUsuarioInfos();
 
+      getIt<ISharedPreferencesCore>().token = lerInfos.token;
       emit(LerInfosUsuarioState(lerInfos.usuario['usuario'], lerInfos.token));
     } catch (e) {
       emit(ErrorUsuarioState(e.toString()));

@@ -7,6 +7,7 @@ import 'package:cafeteria_app/config/routes/rotas.dart';
 import 'package:cafeteria_app/core/utils/getit_setup.dart';
 import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
+import 'package:cafeteria_app/features/presentation/bloc/usuario_carrinho/usuario_carrinho_bloc.dart';
 
 void main() {
   getItSetup();
@@ -23,6 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final IUsuarioBloc _usuarioBloc = getIt<IUsuarioBloc>();
   final ProdutosBloc _produtosBloc = ProdutosBloc();
+  final IUsuarioCarrinhoBloc _carrinhoBloc = UsuarioCarrinhoBloc();
 
   @override
   void initState() {
@@ -37,6 +39,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (context) => _usuarioBloc),
         BlocProvider(create: (context) => _produtosBloc),
+        BlocProvider(create: (context) => _carrinhoBloc),
       ],
       child: MaterialApp.router(
         routerConfig: Rotas().rotas,

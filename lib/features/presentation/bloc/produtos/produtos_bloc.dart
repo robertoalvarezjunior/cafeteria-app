@@ -21,13 +21,13 @@ sealed class IProdutosBloc extends Bloc<IProdutosEvent, IProdutosState> {
 }
 
 final class ProdutosBloc extends IProdutosBloc {
-  ProdutosBloc() : super(LoadingProdutosState());
+  ProdutosBloc() : super(InitialProdutosState());
 
   @override
   void _getProdutos(
       GetProdutosEvent event, Emitter<IProdutosState> emit) async {
     try {
-      emit(LoadingProdutosState());
+      emit(InitialProdutosState());
       final produtos = await _getListaProdutos.listaProdutos();
       emit(LoadedProdutosState(produtos));
       if (produtos.isEmpty) {
