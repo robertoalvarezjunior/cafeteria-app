@@ -17,15 +17,14 @@ sealed class IProdutosBloc extends Bloc<IProdutosEvent, IProdutosState> {
     on<GetProdutosEvent>(_getProdutos);
   }
 
-  void _getProdutos(GetProdutosEvent event, Emitter<IProdutosState> emit);
+  void _getProdutos(IProdutosEvent event, Emitter<IProdutosState> emit);
 }
 
 final class ProdutosBloc extends IProdutosBloc {
   ProdutosBloc() : super(InitialProdutosState());
 
   @override
-  void _getProdutos(
-      GetProdutosEvent event, Emitter<IProdutosState> emit) async {
+  void _getProdutos(IProdutosEvent event, Emitter<IProdutosState> emit) async {
     try {
       emit(InitialProdutosState());
       final produtos = await _getListaProdutos.listaProdutos();

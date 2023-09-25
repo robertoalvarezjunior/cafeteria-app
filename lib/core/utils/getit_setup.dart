@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 
-import 'package:cafeteria_app/core/shared_preferences/shared_preferences_core.dart';
 import 'package:cafeteria_app/features/data/data_sources/lista_produtos_datasources.dart';
 import 'package:cafeteria_app/features/data/data_sources/remote/lista_produtos_remote_datasource_imp.dart';
 import 'package:cafeteria_app/features/data/data_sources/remote/usuario_carrinho_remote_datasources_imp.dart';
@@ -38,6 +37,7 @@ import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/get_usua
 import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/save_usuario_endereco/save_usuario_endereco.dart';
 import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/save_usuario_endereco/save_usuario_endereco_imp.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
+import 'package:cafeteria_app/features/presentation/bloc/usuario_carrinho/usuario_carrinho_bloc.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -73,6 +73,5 @@ void getItSetup() {
 
   getIt.registerSingleton<IUsuarioBloc>(UsuarioBloc());
 
-  getIt.registerLazySingleton<ISharedPreferencesCore>(
-      () => SharedPreferencesCore());
+  getIt.registerSingleton<IUsuarioCarrinhoBloc>(UsuarioCarrinhoBloc());
 }
