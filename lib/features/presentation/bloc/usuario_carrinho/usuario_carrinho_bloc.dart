@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:equatable/equatable.dart';
@@ -78,21 +80,30 @@ final class UsuarioCarrinhoBloc extends IUsuarioCarrinhoBloc {
   }
 
   @override
-  void _deletarProdutoCarrinhoEvent(
-      DeletarProdutoCarrinhoEvent event, Emitter<IUsuarioCarrinhoState> emit) {
-    try {
-      getIt<IDeleteItemCarrinho>()
-          .deleteItemCarrinho(id: event.id, bearer: event.bearer ?? 'null')
-          .then((value) => ScaffoldMessenger.of(event.context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    value,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ));
-    } on CatchError catch (e) {
+  void _deletarProdutoCarrinhoEvent(DeletarProdutoCarrinhoEvent event,
+      Emitter<IUsuarioCarrinhoState> emit) async {
+    await getIt<IDeleteItemCarrinho>()
+        .deleteItemCarrinho(id: event.id, bearer: event.bearer ?? 'null')
+        .then(
+      (value) {
+        ScaffoldMessenger.of(event.context).showSnackBar(
+          SnackBar(
+            content: Text(
+              value,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      },
+    ).whenComplete(() async {
+      final carrinho = await _getUsuarioCarrinho.getUsuarioCarrinho(
+          idUsuario: event.idUsuario ?? 'null', bearer: event.bearer ?? 'null');
+      emit(LoadedUsuarioCarrinhoState(carrinho));
+      if (carrinho.isEmpty) {
+        emit(EmptyUsuarioCarrinhoState());
+      }
+    }).catchError((e) {
       emit(ErrorUsuarioCarrinhoState(e.message));
-    }
+    });
   }
 }

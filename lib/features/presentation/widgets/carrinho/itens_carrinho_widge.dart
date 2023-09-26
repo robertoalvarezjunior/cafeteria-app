@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -19,67 +18,60 @@ class ItensCarrinhoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: state.carrinho
-            .map(
-              (e) => Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                      utf8.decode(e.produtoCarrinho!.nomeProduto.codeUnits),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(utf8.decode(
-                            e.produtoCarrinho!.descricaoProduto.codeUnits)),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 24),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'R\$ ${e.produtoCarrinho!.precoProduto.toStringAsFixed(2).replaceAll('.', ',')}',
-                                style: const TextStyle(fontSize: 15),
+    return ListView.separated(
+        itemBuilder: (context, index) {
+          final carrinho = state.carrinho[index];
+          return ListTile(
+            title: Text(
+              utf8.decode(carrinho.produtoCarrinho!.nomeProduto.codeUnits),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(utf8.decode(
+                    carrinho.produtoCarrinho!.descricaoProduto.codeUnits)),
+                Padding(
+                  padding: const EdgeInsets.only(top: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'R\$ ${carrinho.produtoCarrinho!.precoProduto.toStringAsFixed(2).replaceAll('.', ',')}',
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(12),
+                        onTap: () => context.read<IUsuarioCarrinhoBloc>().add(
+                              DeletarProdutoCarrinhoEvent(
+                                context: context,
+                                id: carrinho.idCarrinho!,
+                                idUsuario: context
+                                    .read<IUsuarioBloc>()
+                                    .usuarioInfos?['idUsuario'],
+                                bearer: context.read<IUsuarioBloc>().tokenInfos,
                               ),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(12),
-                                onTap: () =>
-                                    context.read<IUsuarioCarrinhoBloc>().add(
-                                          DeletarProdutoCarrinhoEvent(
-                                            context: context,
-                                            id: e.idCarrinho!,
-                                            bearer: context
-                                                .read<IUsuarioBloc>()
-                                                .tokenInfos,
-                                          ),
-                                        ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Remover',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: colorTheme(context).primary),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Remover',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: colorTheme(context).primary),
                           ),
                         ),
-                      ],
-                    ),
-                    trailing: Image.memory(
-                      base64Decode(e.produtoCarrinho!.imagemProduto),
-                    ),
+                      ),
+                    ],
                   ),
-                  const Divider(),
-                ],
-              ),
-            )
-            .toList(),
-      ),
-    );
+                ),
+              ],
+            ),
+            trailing: Image.memory(
+              base64Decode(carrinho.produtoCarrinho!.imagemProduto),
+            ),
+          );
+        },
+        separatorBuilder: (context, index) => const Divider(),
+        itemCount: state.carrinho.length);
   }
 }
