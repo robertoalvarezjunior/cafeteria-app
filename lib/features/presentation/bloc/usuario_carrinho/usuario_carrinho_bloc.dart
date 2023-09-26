@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import 'package:equatable/equatable.dart';
@@ -86,6 +84,7 @@ final class UsuarioCarrinhoBloc extends IUsuarioCarrinhoBloc {
         .deleteItemCarrinho(id: event.id, bearer: event.bearer ?? 'null')
         .then(
       (value) {
+        emit(InitialUsuarioCarrinhoState());
         ScaffoldMessenger.of(event.context).showSnackBar(
           SnackBar(
             content: Text(

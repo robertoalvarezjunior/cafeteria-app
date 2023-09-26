@@ -17,7 +17,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
   @override
   void initState() {
     var infosUsuario = context.read<IUsuarioBloc>();
-
     context.read<IUsuarioCarrinhoBloc>().add(GetUsuarioCarrinhoEvent(
         idUsuario: infosUsuario.usuarioInfos!['idUsuario'],
         bearer: infosUsuario.tokenInfos));
@@ -30,6 +29,14 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     return BlocBuilder<IUsuarioCarrinhoBloc, IUsuarioCarrinhoState>(
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            actions: [
+              TextButton(
+                onPressed: () {},
+                child: const Text('Finalizar'),
+              ),
+            ],
+          ),
           body: switch (state) {
             InitialUsuarioCarrinhoState() => const Center(
                 child: CircularProgressIndicator.adaptive(),
@@ -37,7 +44,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
             EmptyUsuarioCarrinhoState() => const Center(
                 child: Text('Carinho vazio'),
               ),
-            LoadedUsuarioCarrinhoState() => ItensCarrinhoWidget(state: state),
+            LoadedUsuarioCarrinhoState() =>
+              ItensCarrinhoWidget(state: state.carrinho),
             ErrorUsuarioCarrinhoState() => Center(
                 child: Text(state.message),
               ),

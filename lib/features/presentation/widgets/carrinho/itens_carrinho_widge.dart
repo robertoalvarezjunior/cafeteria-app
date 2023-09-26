@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:cafeteria_app/config/theme/color_theme.dart';
+import 'package:cafeteria_app/features/domain/entities/usuario_carrinho_entity.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario_carrinho/usuario_carrinho_bloc.dart';
 
@@ -14,13 +15,13 @@ class ItensCarrinhoWidget extends StatelessWidget {
     required this.state,
   }) : super(key: key);
 
-  final LoadedUsuarioCarrinhoState state;
+  final List<UsuarioCarrinhoEntity> state;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
         itemBuilder: (context, index) {
-          final carrinho = state.carrinho[index];
+          final carrinho = state[index];
           return ListTile(
             title: Text(
               utf8.decode(carrinho.produtoCarrinho!.nomeProduto.codeUnits),
@@ -72,6 +73,6 @@ class ItensCarrinhoWidget extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) => const Divider(),
-        itemCount: state.carrinho.length);
+        itemCount: state.length);
   }
 }

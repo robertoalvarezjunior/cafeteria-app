@@ -81,11 +81,14 @@ class ItensWidget extends StatelessWidget {
                                             usuarioCarrinho: usuarioCarrinho),
                                       );
                                 },
-                                child: Text(
-                                  'Adicionar',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: colorTheme(context).primary),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Adicionar',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: colorTheme(context).primary),
+                                  ),
                                 ),
                               ),
                             ],
