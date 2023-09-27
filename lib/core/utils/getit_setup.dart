@@ -11,10 +11,12 @@ import 'package:cafeteria_app/features/data/data_sources/usuario_endereco_dataso
 import 'package:cafeteria_app/features/data/repositorys/lista_produtos_repository_imp.dart';
 import 'package:cafeteria_app/features/data/repositorys/usuario_carrinho_respository_imp.dart';
 import 'package:cafeteria_app/features/data/repositorys/usuario_endereco_repository_imp.dart';
+import 'package:cafeteria_app/features/data/repositorys/usuario_pedidos_repository_imp.dart';
 import 'package:cafeteria_app/features/data/repositorys/usuario_repository_imp.dart';
 import 'package:cafeteria_app/features/domain/repositorys/lista_produtos_repository.dart';
 import 'package:cafeteria_app/features/domain/repositorys/usuario_carrinho_repository.dart';
 import 'package:cafeteria_app/features/domain/repositorys/usuario_endereco_repository.dart';
+import 'package:cafeteria_app/features/domain/repositorys/usuario_pedidos_repository.dart';
 import 'package:cafeteria_app/features/domain/repositorys/usuario_repository.dart';
 import 'package:cafeteria_app/features/domain/usecases/lista_produtos/get_lista_produtos.dart';
 import 'package:cafeteria_app/features/domain/usecases/lista_produtos/get_lista_produtos_imp.dart';
@@ -74,4 +76,7 @@ void getItSetup() {
   getIt.registerSingleton<IUsuarioBloc>(UsuarioBloc());
 
   getIt.registerSingleton<IUsuarioCarrinhoBloc>(UsuarioCarrinhoBloc());
+
+  getIt.registerSingleton<IUsuarioPedidosRepository>(
+      UsuarioPedidosRepositoryImp());
 }
