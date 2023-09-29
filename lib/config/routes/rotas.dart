@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 
+import 'package:cafeteria_app/features/domain/entities/usuario_carrinho_entity.dart';
 import 'package:cafeteria_app/features/presentation/pages/carrinho/carrinho_page.dart';
+import 'package:cafeteria_app/features/presentation/pages/enderecos/enderecos_page.dart';
 import 'package:cafeteria_app/features/presentation/pages/home_page.dart';
 import 'package:cafeteria_app/features/presentation/pages/login/login_page.dart';
 import 'package:cafeteria_app/features/presentation/pages/pedidos/pedidos_page.dart';
@@ -52,6 +54,12 @@ class Rotas {
             ),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/enderecos',
+        name: 'enderecos',
+        builder: (context, state) => EnderecosPage(
+            finalizarCarrinho: state.extra as List<UsuarioCarrinhoEntity>),
       ),
     ],
   );

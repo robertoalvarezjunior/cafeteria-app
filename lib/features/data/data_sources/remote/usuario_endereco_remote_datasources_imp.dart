@@ -1,18 +1,20 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
 import 'package:cafeteria_app/features/data/data_sources/usuario_endereco_datasources.dart';
 import 'package:cafeteria_app/features/data/dtos/usuario_endereco_dto.dart';
 import 'package:cafeteria_app/features/domain/entities/error.dart';
 import 'package:cafeteria_app/features/domain/entities/usuario_endereco_entity.dart';
-import 'package:http/http.dart' as http;
 
 final class UsuarioEnderecoRemoteDataSourcesImp
     implements IUsuarioEnderecoDataSources {
   @override
   Future<String> deleteUsuarioEndereco(
-      {required String idUsuario, required String bearer}) async {
+      {required String idEndereco, required String bearer}) async {
     try {
-      var url = Uri.parse("http://10.40.10.55:8080/usuarioEndereco/$idUsuario");
+      var url =
+          Uri.parse("http://10.40.10.55:8080/usuarioEndereco/$idEndereco");
 
       http.Response response = await http.delete(url, headers: {
         "Accept": "application/json",

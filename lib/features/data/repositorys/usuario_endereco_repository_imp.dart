@@ -9,7 +9,7 @@ final class UsuarioEnderecoRepositoryImp implements IUsuarioEnderecoRepository {
   Future<String> deleteUsuarioEndereco(
       {required String idUsuario, required String bearer}) {
     return getIt<IUsuarioEnderecoDataSources>()
-        .deleteUsuarioEndereco(idUsuario: idUsuario, bearer: bearer);
+        .deleteUsuarioEndereco(idEndereco: idUsuario, bearer: bearer);
   }
 
   @override

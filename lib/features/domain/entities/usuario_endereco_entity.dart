@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class UsuarioEnderecoEntity {
+  final String? idEndereco;
   final String? idUsuarioEndereco;
-  final String? idUsuarioUsuarioEndereco;
   final String? ruaUsuarioEndereco;
   final String? cidadeUsuarioEndereco;
   final String? estadoUsuarioEnderecUsuaro;
@@ -9,8 +9,8 @@ class UsuarioEnderecoEntity {
   final String? numeroUsuarioEndereco;
   final String? complementoUsuarioEndereco;
   UsuarioEnderecoEntity({
+    this.idEndereco,
     this.idUsuarioEndereco,
-    this.idUsuarioUsuarioEndereco,
     required this.ruaUsuarioEndereco,
     required this.cidadeUsuarioEndereco,
     required this.estadoUsuarioEnderecUsuaro,

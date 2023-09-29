@@ -5,8 +5,8 @@ import 'package:cafeteria_app/features/domain/usecases/usuario_endereco/delete_u
 final class DeleteUsuarioEnderecoImp implements IDeleteUsuarioEndereco {
   @override
   Future<String> deleteUsuarioEndereco(
-      {required String idUsuario, required String bearer}) async {
+      {required String idEndereco, required String bearer}) async {
     return await getIt<IUsuarioEnderecoRepository>()
-        .deleteUsuarioEndereco(idUsuario: idUsuario, bearer: bearer);
+        .deleteUsuarioEndereco(idUsuario: idEndereco, bearer: bearer);
   }
 }

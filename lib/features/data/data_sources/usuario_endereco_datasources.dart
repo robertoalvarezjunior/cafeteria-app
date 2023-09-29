@@ -11,5 +11,5 @@ abstract class IUsuarioEnderecoDataSources {
       {required String idUsuario, required String bearer});
 
   Future<String> deleteUsuarioEndereco(
-      {required String idUsuario, required String bearer});
+      {required String idEndereco, required String bearer});
 }

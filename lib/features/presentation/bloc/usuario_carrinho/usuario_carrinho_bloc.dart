@@ -20,12 +20,12 @@ sealed class IUsuarioCarrinhoBloc
   late final IGetUsuarioCarrinho _getUsuarioCarrinho;
   IUsuarioCarrinhoBloc(super.initialState) {
     _getUsuarioCarrinho = GetUsuarioCarrinhoImp();
-    on<AdicionarProdutoCarrinhoEvent>(_dicionarProdutoCarrinhoEvent);
+    on<AdicionarProdutoCarrinhoEvent>(_adicionarProdutoCarrinhoEvent);
     on<GetUsuarioCarrinhoEvent>(_getUsuarioCarrinhoEvent);
     on<DeletarProdutoCarrinhoEvent>(_deletarProdutoCarrinhoEvent);
   }
 
-  void _dicionarProdutoCarrinhoEvent(
+  void _adicionarProdutoCarrinhoEvent(
       AdicionarProdutoCarrinhoEvent event, Emitter<IUsuarioCarrinhoState> emit);
 
   void _getUsuarioCarrinhoEvent(
@@ -39,7 +39,7 @@ final class UsuarioCarrinhoBloc extends IUsuarioCarrinhoBloc {
   UsuarioCarrinhoBloc() : super(InitialUsuarioCarrinhoState());
 
   @override
-  _dicionarProdutoCarrinhoEvent(AdicionarProdutoCarrinhoEvent event,
+  _adicionarProdutoCarrinhoEvent(AdicionarProdutoCarrinhoEvent event,
       Emitter<IUsuarioCarrinhoState> emit) {
     try {
       getIt<IAddItemCarrinho>()

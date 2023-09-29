@@ -8,6 +8,7 @@ import 'package:cafeteria_app/core/utils/getit_setup.dart';
 import 'package:cafeteria_app/features/presentation/bloc/produtos/produtos_bloc.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario_carrinho/usuario_carrinho_bloc.dart';
+import 'package:cafeteria_app/features/presentation/bloc/usuario_endereco/usuario_endereco_bloc.dart';
 
 void main() {
   getItSetup();
@@ -25,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   final IUsuarioBloc _usuarioBloc = getIt<IUsuarioBloc>();
   final ProdutosBloc _produtosBloc = ProdutosBloc();
   final IUsuarioCarrinhoBloc _carrinhoBloc = UsuarioCarrinhoBloc();
+  final IUsuarioEnderecoBloc _enderecoBloc = UsuarioEnderecoBloc();
 
   @override
   void initState() {
@@ -40,6 +42,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => _usuarioBloc),
         BlocProvider(create: (context) => _produtosBloc),
         BlocProvider(create: (context) => _carrinhoBloc),
+        BlocProvider(create: (context) => _enderecoBloc),
       ],
       child: MaterialApp.router(
         routerConfig: Rotas().rotas,

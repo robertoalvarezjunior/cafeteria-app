@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:cafeteria_app/config/theme/color_theme.dart';
-import 'package:cafeteria_app/core/utils/getit_setup.dart';
 import 'package:cafeteria_app/features/domain/entities/usuario_carrinho_entity.dart';
-import 'package:cafeteria_app/features/domain/repositorys/usuario_pedidos_repository.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario/usuario_bloc.dart';
 import 'package:cafeteria_app/features/presentation/bloc/usuario_carrinho/usuario_carrinho_bloc.dart';
+import 'package:cafeteria_app/features/presentation/bloc/usuario_endereco/usuario_endereco_bloc.dart';
 
 class ItensCarrinhoWidget extends StatelessWidget {
   const ItensCarrinhoWidget({
@@ -27,7 +27,11 @@ class ItensCarrinhoWidget extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              getIt<IUsuarioPedidosRepository>().pedidos = finalizarCarrinho;
+              var infosUsuario = context.read<IUsuarioBloc>();
+              context.pushNamed('enderecos', extra: finalizarCarrinho);
+              context.read<IUsuarioEnderecoBloc>().add(GetUsuarioEnderecoEvent(
+                  idUsuario: infosUsuario.usuarioInfos?['idUsuario'],
+                  bearer: infosUsuario.tokenInfos));
             },
             child: const Text('Finalizar'),
           ),

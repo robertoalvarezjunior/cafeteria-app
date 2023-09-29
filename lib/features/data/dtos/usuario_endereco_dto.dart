@@ -23,7 +23,7 @@ class UsuarioEnderecoDto extends UsuarioEnderecoEntity {
     this.numero,
     this.complemento,
   }) : super(
-          idUsuarioEndereco: id,
+          idEndereco: id,
           ruaUsuarioEndereco: rua,
           cidadeUsuarioEndereco: cidade,
           estadoUsuarioEnderecUsuaro: estado,
